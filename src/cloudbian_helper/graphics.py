@@ -94,6 +94,7 @@ class Graphs:
         ylabel="Value",
         show=True
     ):
+        """Draw a simple and basic bar graph."""
         plt.figure(figsize=self.figsize)
         plt.bar(labels, values, color=color)
 
@@ -114,6 +115,7 @@ class Graphs:
         color="green",
         show=True
     ):
+        """Draw a simple and basic horizontal bar graph."""
         plt.figure(figsize=self.figsize)
         plt.barh(labels, values, color=color)
         plt.title(self.title)
@@ -132,6 +134,7 @@ class Graphs:
         size=50,
         show=True
     ):
+        """Draw a standard scatter graph using the x and y coordinates"""
         plt.figure(figsize=self.figsize)
 
         plt.scatter(
@@ -158,6 +161,7 @@ class Graphs:
         startangle=90,
         show=True
     ):
+        """Draw a color coded pie chart"""
         plt.figure(figsize=self.figsize)
 
         plt.pie(
@@ -182,6 +186,7 @@ class Graphs:
         color="purple",
         show=True
     ):
+        """By using this command you can simly draw a histograph"""
         plt.figure(figsize=self.figsize)
 
         plt.hist(
@@ -206,6 +211,7 @@ class Graphs:
         alpha=0.5,
         show=True
     ):
+        """Draw an area graph using this command. An example for usage is ```graph.area_graph(x=(12, 2), y=(1,12))```."""
         plt.figure(figsize=self.figsize)
 
         plt.fill_between(
@@ -230,6 +236,7 @@ class Graphs:
         color="orange",
         show=True
     ):
+        """Draw a simple step graph"""
         plt.figure(figsize=self.figsize)
 
         plt.step(
@@ -252,6 +259,7 @@ class Graphs:
         y,
         show=True
     ):
+        """Draw a simple stem graph."""
         plt.figure(figsize=self.figsize)
 
         plt.stem(x, y)
@@ -269,6 +277,7 @@ class Graphs:
         data,
         show=True
     ):
+        """Draw a simple box plot graph"""
         plt.figure(figsize=self.figsize)
 
         plt.boxplot(data)
@@ -286,6 +295,7 @@ class Graphs:
         data,
         show=True
     ):
+        """Draw a violin graph"""
         plt.figure(figsize=self.figsize)
 
         plt.violinplot(data)
@@ -304,6 +314,7 @@ class Graphs:
         cmap="viridis",
         show=True
     ):
+        """Draw a heat map"""
         plt.figure(figsize=self.figsize)
 
         plt.imshow(
@@ -325,6 +336,7 @@ class Graphs:
         data_function,
         interval=100
     ):
+        """Draw a realtime graph"""
         fig, ax = plt.subplots()
 
         x_data = []
@@ -362,6 +374,7 @@ class Graphs:
         filename="graph.png",
         dpi=300
     ):
+        """Save the graph to a file"""
         plt.savefig(
             filename,
             dpi=dpi,
