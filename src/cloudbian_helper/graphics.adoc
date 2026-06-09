@@ -1,0 +1,394 @@
+
+= Graphics
+:authors: Cloudberry Pi Foundations
+:toc:
+
+Generate graphs using matplotlib only by entering simple commands.
+
+== Example Usage
+
+[source,python]
+----
+from graphs import Graphs
+
+g = Graphs(
+    title="Animal Balance",
+    theme="ggplot"
+)
+
+g.pie_chart(
+    labels=["Humans", "Animals", "Insects"],
+    values=[80, 50, 40]
+)
+
+g.bar_graph(
+    labels=["Humans", "Animals", "Insects"],
+    values=[80, 50, 40]
+)
+
+g.horizontal_bar_graph(
+    labels=["Humans", "Animals", "Insects"],
+    values=[80, 50, 40]
+)
+----
+
+== Installation
+
+[source,bash]
+----
+pip install matplotlib numpy
+----
+
+== Creating a Graph Object
+
+[source,python]
+----
+from graphs import Graphs
+
+g = Graphs(
+    title="My Graph",
+    figsize=(8, 5),
+    theme="ggplot",
+    grid=True
+)
+----
+
+=== Parameters
+
+* title → Graph title
+* figsize → Size of figure
+* theme → Matplotlib style
+* grid → Show grid
+
+== 2D Graphs
+
+=== Line Graph
+
+[source,python]
+----
+g.line_graph(
+    x=[1,2,3,4],
+    y=[10,20,30,40]
+)
+----
+
+==== Parameters
+
+* x
+* y
+* color="blue"
+* marker="o"
+* linewidth=2
+* xlabel="X"
+* ylabel="Y"
+* show=True
+
+---
+
+=== Bar Graph
+
+[source,python]
+----
+g.bar_graph(
+    labels=["A","B","C"],
+    values=[10,20,30]
+)
+----
+
+==== Parameters
+
+* labels
+* values
+* color="skyblue"
+* xlabel="Category"
+* ylabel="Value"
+* show=True
+
+---
+
+=== Horizontal Bar Graph
+
+[source,python]
+----
+g.horizontal_bar_graph(
+    labels=["A","B","C"],
+    values=[10,20,30]
+)
+----
+
+==== Parameters
+
+* labels
+* values
+* color="green"
+* show=True
+
+---
+
+=== Scatter Graph
+
+[source,python]
+----
+g.scatter_graph(
+    x=[1,2,3],
+    y=[4,5,6]
+)
+----
+
+==== Parameters
+
+* x
+* y
+* color="red"
+* size=50
+* show=True
+
+---
+
+=== Pie Chart
+
+[source,python]
+----
+g.pie_chart(
+    labels=["A","B","C"],
+    values=[50,30,20]
+)
+----
+
+==== Parameters
+
+* labels
+* values
+* autopct="%1.1f%%"
+* startangle=90
+* show=True
+
+---
+
+=== Histogram
+
+[source,python]
+----
+g.histogram(
+    data=[1,2,2,3,4,5]
+)
+----
+
+==== Parameters
+
+* data
+* bins=10
+* color="purple"
+* show=True
+
+---
+
+=== Area Graph
+
+[source,python]
+----
+g.area_graph(
+    x=[1,2,3,4],
+    y=[10,20,30,40]
+)
+----
+
+==== Parameters
+
+* x
+* y
+* color="cyan"
+* alpha=0.5
+* show=True
+
+---
+
+=== Step Graph
+
+[source,python]
+----
+g.step_graph(
+    x=[1,2,3],
+    y=[10,20,30]
+)
+----
+
+---
+
+=== Stem Graph
+
+[source,python]
+----
+g.stem_graph(
+    x=[1,2,3],
+    y=[10,20,30]
+)
+----
+
+---
+
+=== Box Plot
+
+[source,python]
+----
+g.box_plot([1,2,3,4,5,6])
+----
+
+---
+
+=== Violin Plot
+
+[source,python]
+----
+g.violin_plot([1,2,3,4,5,6])
+----
+
+---
+
+=== Heatmap
+
+[source,python]
+----
+g.heatmap([
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+])
+----
+
+---
+
+== Realtime Graph
+
+[source,python]
+----
+import random
+
+def data():
+    return random.randint(1,100)
+
+g.realtime_graph(data)
+----
+
+---
+
+== 3D Graphs
+
+=== 3D Line Graph
+
+[source,python]
+----
+g.line_3d_graph(
+    x=[1,2,3],
+    y=[4,5,6],
+    z=[7,8,9]
+)
+----
+
+=== 3D Scatter Graph
+
+[source,python]
+----
+g.scatter_3d_graph(
+    x=[1,2,3],
+    y=[4,5,6],
+    z=[7,8,9]
+)
+----
+
+=== 3D Bar Graph
+
+[source,python]
+----
+g.bar_3d_graph(
+    x=[1,2,3],
+    y=[1,1,1],
+    z=[10,20,30]
+)
+----
+
+=== 3D Surface Graph
+
+[source,python]
+----
+import numpy as np
+
+x = np.linspace(-5,5,50)
+y = np.linspace(-5,5,50)
+X, Y = np.meshgrid(x,y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+g.surface_3d_graph(X, Y, Z)
+----
+
+=== 3D Wireframe Graph
+
+[source,python]
+----
+g.wireframe_3d_graph(X, Y, Z)
+----
+
+=== 3D Contour Graph
+
+[source,python]
+----
+g.contour_3d_graph(X, Y, Z)
+----
+
+=== 3D Stem Graph
+
+[source,python]
+----
+g.stem_3d_graph(
+    x=[1,2,3],
+    y=[1,2,3],
+    z=[4,5,6]
+)
+----
+
+---
+
+== Save Graph
+
+[source,python]
+----
+g.save("graph.png")
+----
+
+=== Parameters
+
+* filename="graph.png"
+* dpi=300
+
+---
+
+== Themes
+
+* default
+* ggplot
+* dark_background
+* seaborn-v0_8
+* classic
+* bmh
+* fast
+
+---
+
+== Full Example
+
+[source,python]
+----
+from graphs import Graphs
+
+g = Graphs(
+    title="Sales Data",
+    theme="ggplot"
+)
+
+g.bar_graph(
+    labels=["India","USA","China"],
+    values=[100,200,300]
+)
+
+g.save("sales.png")
+----
