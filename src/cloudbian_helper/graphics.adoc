@@ -1,9 +1,8 @@
-
-= Graphics
-:authors: Cloudberry Pi Foundations
+= Graphics Module
 :toc:
+:authors: Cloudberry Pi Foundations
 
-Generate graphs using matplotlib only by entering simple commands.
+A simple Python library that makes data visualization easier using Matplotlib with a clean API and built-in 2D + 3D graphs.
 
 == Example Usage
 
@@ -48,7 +47,7 @@ from graphs import Graphs
 g = Graphs(
     title="My Graph",
     figsize=(8, 5),
-    theme="ggplot",
+    theme="default",
     grid=True
 )
 ----
@@ -56,11 +55,13 @@ g = Graphs(
 === Parameters
 
 * title → Graph title
-* figsize → Size of figure
-* theme → Matplotlib style
-* grid → Show grid
+* figsize → Figure size
+* theme → Matplotlib style (e.g. ggplot, default)
+* grid → Enable grid (True/False)
 
-== 2D Graphs
+---
+
+== 2D GRAPHS
 
 === Line Graph
 
@@ -72,19 +73,6 @@ g.line_graph(
 )
 ----
 
-==== Parameters
-
-* x
-* y
-* color="blue"
-* marker="o"
-* linewidth=2
-* xlabel="X"
-* ylabel="Y"
-* show=True
-
----
-
 === Bar Graph
 
 [source,python]
@@ -94,17 +82,6 @@ g.bar_graph(
     values=[10,20,30]
 )
 ----
-
-==== Parameters
-
-* labels
-* values
-* color="skyblue"
-* xlabel="Category"
-* ylabel="Value"
-* show=True
-
----
 
 === Horizontal Bar Graph
 
@@ -116,15 +93,6 @@ g.horizontal_bar_graph(
 )
 ----
 
-==== Parameters
-
-* labels
-* values
-* color="green"
-* show=True
-
----
-
 === Scatter Graph
 
 [source,python]
@@ -134,16 +102,6 @@ g.scatter_graph(
     y=[4,5,6]
 )
 ----
-
-==== Parameters
-
-* x
-* y
-* color="red"
-* size=50
-* show=True
-
----
 
 === Pie Chart
 
@@ -155,16 +113,6 @@ g.pie_chart(
 )
 ----
 
-==== Parameters
-
-* labels
-* values
-* autopct="%1.1f%%"
-* startangle=90
-* show=True
-
----
-
 === Histogram
 
 [source,python]
@@ -173,15 +121,6 @@ g.histogram(
     data=[1,2,2,3,4,5]
 )
 ----
-
-==== Parameters
-
-* data
-* bins=10
-* color="purple"
-* show=True
-
----
 
 === Area Graph
 
@@ -193,16 +132,6 @@ g.area_graph(
 )
 ----
 
-==== Parameters
-
-* x
-* y
-* color="cyan"
-* alpha=0.5
-* show=True
-
----
-
 === Step Graph
 
 [source,python]
@@ -212,8 +141,6 @@ g.step_graph(
     y=[10,20,30]
 )
 ----
-
----
 
 === Stem Graph
 
@@ -225,8 +152,6 @@ g.stem_graph(
 )
 ----
 
----
-
 === Box Plot
 
 [source,python]
@@ -234,16 +159,12 @@ g.stem_graph(
 g.box_plot([1,2,3,4,5,6])
 ----
 
----
-
 === Violin Plot
 
 [source,python]
 ----
 g.violin_plot([1,2,3,4,5,6])
 ----
-
----
 
 === Heatmap
 
@@ -258,7 +179,7 @@ g.heatmap([
 
 ---
 
-== Realtime Graph
+== REALTIME GRAPH
 
 [source,python]
 ----
@@ -272,97 +193,111 @@ g.realtime_graph(data)
 
 ---
 
-== 3D Graphs
-
-=== 3D Line Graph
-
-[source,python]
-----
-g.line_3d_graph(
-    x=[1,2,3],
-    y=[4,5,6],
-    z=[7,8,9]
-)
-----
-
-=== 3D Scatter Graph
-
-[source,python]
-----
-g.scatter_3d_graph(
-    x=[1,2,3],
-    y=[4,5,6],
-    z=[7,8,9]
-)
-----
-
-=== 3D Bar Graph
-
-[source,python]
-----
-g.bar_3d_graph(
-    x=[1,2,3],
-    y=[1,1,1],
-    z=[10,20,30]
-)
-----
-
-=== 3D Surface Graph
-
-[source,python]
-----
-import numpy as np
-
-x = np.linspace(-5,5,50)
-y = np.linspace(-5,5,50)
-X, Y = np.meshgrid(x,y)
-Z = np.sin(np.sqrt(X**2 + Y**2))
-
-g.surface_3d_graph(X, Y, Z)
-----
-
-=== 3D Wireframe Graph
-
-[source,python]
-----
-g.wireframe_3d_graph(X, Y, Z)
-----
-
-=== 3D Contour Graph
-
-[source,python]
-----
-g.contour_3d_graph(X, Y, Z)
-----
-
-=== 3D Stem Graph
-
-[source,python]
-----
-g.stem_3d_graph(
-    x=[1,2,3],
-    y=[1,2,3],
-    z=[4,5,6]
-)
-----
-
----
-
-== Save Graph
+== SAVE GRAPH
 
 [source,python]
 ----
 g.save("graph.png")
 ----
 
-=== Parameters
+---
 
-* filename="graph.png"
-* dpi=300
+== 3D GRAPHS (VALUE-ONLY API)
+
+All 3D graphs use ONLY values (no x/y/z required). The library generates structure automatically.
+
+---
+
+=== 3D Bar Graph
+
+[source,python]
+----
+g.bar_3d_graph(
+    labels=["A","B","C"],
+    values=[10,20,30]
+)
+----
+
+---
+
+=== 3D Line Graph (True 3D)
+
+[source,python]
+----
+g.line_3d_graph(
+    values=[5,10,15,20],
+    style="linear"
+)
+----
+
+==== Styles
+
+* linear
+* wave
+* spiral
+
+---
+
+=== 3D Scatter Graph
+
+[source,python]
+----
+g.scatter_3d_graph(
+    values=[1,2,3,4,5]
+)
+----
+
+---
+
+=== 3D Surface Graph
+
+[source,python]
+----
+g.surface_3d_graph(
+    values=[3,6,2,8,5]
+)
+----
+
+---
+
+=== 3D Wireframe Graph
+
+[source,python]
+----
+g.wireframe_3d_graph(
+    values=[3,6,2,8,5]
+)
+----
+
+---
+
+=== 3D Contour Graph
+
+[source,python]
+----
+g.contour_3d_graph(
+    values=[3,6,2,8,5]
+)
+----
+
+---
+
+=== 🌄 Mountain Graph (Terrain Style)
+
+A smooth 3D landscape-style graph.
+
+[source,python]
+----
+g.mountain_3d_graph(
+    values=[3,8,2,10,6,12]
+)
+----
 
 ---
 
 == Themes
+
+Available Matplotlib themes:
 
 * default
 * ggplot
@@ -370,7 +305,6 @@ g.save("graph.png")
 * seaborn-v0_8
 * classic
 * bmh
-* fast
 
 ---
 
@@ -390,5 +324,14 @@ g.bar_graph(
     values=[100,200,300]
 )
 
-g.save("sales.png")
+g.bar_3d_graph(
+    labels=["India","USA","China"],
+    values=[100,200,300]
+)
+
+g.mountain_3d_graph(
+    values=[5,10,3,12,7]
+)
+
+g.save("output.png")
 ----

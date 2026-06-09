@@ -36,6 +36,8 @@ g.horizontal_bar_graph(
 
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 
 class Graphs:
@@ -380,114 +382,103 @@ class Graphs:
             dpi=dpi,
             bbox_inches="tight"
         )
-    # -------------------------
-    # 3D LINE GRAPH
-    # -------------------------
-    def line_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        color="blue",
-        linewidth=2,
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
-    ):
-        """Draw a 3D line graph."""
-
-        fig = plt.figure(figsize=self.figsize)
-        ax = fig.add_subplot(111, projection="3d")
-
-        ax.plot(
-            x,
-            y,
-            z,
-            color=color,
-            linewidth=linewidth
-        )
-
-        ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
-
-        if show:
-            plt.show()
-
-    # -------------------------
-    # 3D SCATTER GRAPH
-    # -------------------------
-    def scatter_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        color="red",
-        size=50,
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
-    ):
-        """Draw a 3D scatter graph."""
-
-        fig = plt.figure(figsize=self.figsize)
-        ax = fig.add_subplot(111, projection="3d")
-
-        ax.scatter(
-            x,
-            y,
-            z,
-            c=color,
-            s=size
-        )
-
-        ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
-
-        if show:
-            plt.show()
 
     # -------------------------
     # 3D BAR GRAPH
     # -------------------------
     def bar_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        dx=0.5,
-        dy=0.5,
-        color="skyblue",
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
+            self,
+            labels,
+            values,
+            color="skyblue",
+            show=True
     ):
-        """Draw a 3D bar graph."""
+        """Draw a 3D bar graph using only values."""
 
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111, projection="3d")
 
-        ax.bar3d(
-            x,
-            y,
-            np.zeros(len(z)),
-            dx,
-            dy,
-            z,
-            color=color,
-            shade=True
-        )
+        x = np.arange(len(values))
+        y = np.zeros(len(values))
+        z = np.zeros(len(values))
+
+        dx = np.ones(len(values)) * 0.6
+        dy = np.ones(len(values)) * 0.6
+        dz = values
+
+        ax.bar3d(x, y, z, dx, dy, dz, color=color, shade=True)
 
         ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
+        ax.set_xlabel("Index")
+        ax.set_ylabel("")
+        ax.set_zlabel("Value")
+
+        if show:
+            plt.show()
+
+    # -------------------------
+    # 3D LINE GRAPH
+    # -------------------------
+    def line_3d_graph(
+            self,
+            values,
+            color="blue",
+            linewidth=2,
+            style="linear",
+            show=True
+    ):
+        """True 3D line graph using only values."""
+
+        fig = plt.figure(figsize=self.figsize)
+        ax = fig.add_subplot(111, projection="3d")
+
+        x = np.arange(len(values))
+
+        if style == "linear":
+            y = np.arange(len(values))  # depth axis
+        elif style == "wave":
+            y = np.sin(x / 2)  # wave motion depth
+        elif style == "spiral":
+            y = np.cos(x / 2)  # spiral-like variation
+        else:
+            y = np.arange(len(values))
+
+        z = np.array(values)
+
+        ax.plot(x, y, z, color=color, linewidth=linewidth)
+
+        ax.set_title(self.title)
+        ax.set_xlabel("Index (X)")
+        ax.set_ylabel("Depth (Y)")
+        ax.set_zlabel("Value (Z)")
+
+        if show:
+            plt.show()
+    # -------------------------
+    # 3D SCATTER GRAPH
+    # -------------------------
+    def scatter_3d_graph(
+            self,
+            values,
+            color="red",
+            size=50,
+            show=True
+    ):
+        """Draw a 3D scatter graph using only values."""
+
+        fig = plt.figure(figsize=self.figsize)
+        ax = fig.add_subplot(111, projection="3d")
+
+        x = np.arange(len(values))
+        y = np.random.rand(len(values))
+        z = np.array(values)
+
+        ax.scatter(x, y, z, c=color, s=size)
+
+        ax.set_title(self.title)
+        ax.set_xlabel("Index")
+        ax.set_ylabel("Spread")
+        ax.set_zlabel("Value")
 
         if show:
             plt.show()
@@ -496,33 +487,25 @@ class Graphs:
     # 3D SURFACE GRAPH
     # -------------------------
     def surface_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        cmap="viridis",
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
+            self,
+            values,
+            cmap="viridis",
+            show=True
     ):
-        """Draw a 3D surface graph."""
+        """Draw a 3D surface graph from values."""
 
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111, projection="3d")
 
-        ax.plot_surface(
-            x,
-            y,
-            z,
-            cmap=cmap,
-            edgecolor="none"
-        )
+        x = np.arange(len(values))
+        y = np.arange(len(values))
+
+        X, Y = np.meshgrid(x, y)
+        Z = np.outer(values, np.ones(len(values)))
+
+        ax.plot_surface(X, Y, Z, cmap=cmap)
 
         ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
 
         if show:
             plt.show()
@@ -531,32 +514,25 @@ class Graphs:
     # 3D WIREFRAME GRAPH
     # -------------------------
     def wireframe_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        color="black",
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
+            self,
+            values,
+            color="black",
+            show=True
     ):
         """Draw a 3D wireframe graph."""
 
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111, projection="3d")
 
-        ax.plot_wireframe(
-            x,
-            y,
-            z,
-            color=color
-        )
+        x = np.arange(len(values))
+        y = np.arange(len(values))
+
+        X, Y = np.meshgrid(x, y)
+        Z = np.outer(values, np.ones(len(values)))
+
+        ax.plot_wireframe(X, Y, Z, color=color)
 
         ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
 
         if show:
             plt.show()
@@ -565,75 +541,56 @@ class Graphs:
     # 3D CONTOUR GRAPH
     # -------------------------
     def contour_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        cmap="viridis",
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
+            self,
+            values,
+            cmap="terrain",
+            show=True
     ):
         """Draw a 3D contour graph."""
 
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111, projection="3d")
 
-        ax.contour3D(
-            x,
-            y,
-            z,
-            50,
-            cmap=cmap
-        )
+        x = np.arange(len(values))
+        y = np.arange(len(values))
+
+        X, Y = np.meshgrid(x, y)
+        Z = np.outer(values, np.ones(len(values)))
+
+        ax.contour3D(X, Y, Z, 50, cmap=cmap)
 
         ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
 
         if show:
             plt.show()
 
     # -------------------------
-    # 3D STEM GRAPH
+    # 3D MOUNTAIN GRAPH
     # -------------------------
-    def stem_3d_graph(
-        self,
-        x,
-        y,
-        z,
-        color="green",
-        xlabel="X",
-        ylabel="Y",
-        zlabel="Z",
-        show=True
+    def mountain_3d_graph(
+            self,
+            values,
+            cmap="terrain",
+            show=True
     ):
-        """Draw a 3D stem graph."""
+        """Draw a mountain-style 3D terrain graph."""
 
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111, projection="3d")
 
-        for xi, yi, zi in zip(x, y, z):
-            ax.plot(
-                [xi, xi],
-                [yi, yi],
-                [0, zi],
-                color=color
-            )
+        x = np.arange(len(values))
+        y = np.linspace(0, 1, len(values))
 
-        ax.scatter(
-            x,
-            y,
-            z,
-            color=color
-        )
+        X, Y = np.meshgrid(x, y)
+
+        Z = np.tile(values, (len(values), 1)).astype(float)
+
+        # add terrain-like variation
+        Z += np.sin(X / 2) * 0.5
+
+        ax.plot_surface(X, Y, Z, cmap=cmap, edgecolor="none")
 
         ax.set_title(self.title)
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_zlabel(zlabel)
 
         if show:
             plt.show()
