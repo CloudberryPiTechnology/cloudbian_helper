@@ -1,12 +1,10 @@
 from graphics import Graphs
-g = Graphs(title="Test", theme="ggplot")
-temperatures = [
-    [22, 25, 28],
-    [24, 27, 30],
-    [26, 29, 32]
-]
-
-g.heatmap(
-    matrix=temperatures,
-    color="green"
-)
+from tkinter import colorchooser
+clr = colorchooser.askcolor()
+g = Graphs(title="Alpha", theme="ggplot")
+temperatures = [[0, 12, 45, 23],
+                [1, 12, 15, 20],
+                [20, 15, 12, 1]]
+g.heatmap(temperatures
+          ,color=str(clr[1]))
+g.histogram(temperatures)
