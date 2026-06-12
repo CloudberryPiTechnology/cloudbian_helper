@@ -37,6 +37,8 @@ g.horizontal_bar_graph(
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
 
 
@@ -311,25 +313,29 @@ class Graphs:
     # HEATMAP
     # -------------------------
     def heatmap(
-        self,
-        matrix,
-        cmap="viridis",
-        show=True
+            self,
+            matrix,
+            cmap="viridis",
+            color=None,
+            show=True
     ):
-        """Draw a heat map"""
         plt.figure(figsize=self.figsize)
 
-        plt.imshow(
-            matrix,
-            cmap=cmap
-        )
+        heatmap_cmap = cmap
+
+        if color is not None:
+            heatmap_cmap = LinearSegmentedColormap.from_list(
+                f"{color}_heatmap",
+                ["white", color]
+            )
+
+        plt.imshow(matrix, cmap=heatmap_cmap)
 
         plt.colorbar()
         plt.title(self.title)
 
         if show:
             plt.show()
-
     # -------------------------
     # REALTIME LINE GRAPH
     # -------------------------
