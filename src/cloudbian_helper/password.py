@@ -1,5 +1,7 @@
+"""The password module will allow entering password easily and verify it."""
 from tkinter import *
 def start_password_entry(required="abcd1234"):
+    """Generate a password with the start password entry"""
     root = Tk()
     root.title("Enter your password")
     password = Entry(root, show="*")
