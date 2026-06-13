@@ -1,6 +1,6 @@
 [project]
 name = "cloudbian-helper"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = [
     {name = "CloudberryPiTechnologies",email = "cloudberrypi1@outlook.com"}
